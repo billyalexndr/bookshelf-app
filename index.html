@@ -24,6 +24,7 @@
             <!-- Input Data Buku -->
             <form
                 class="d-flex justify-content-center flex-column m-auto"
+                id="form"
                 style="width: 500px; height: 500px"
             >
                 <div class="border border-primary p-3">
@@ -81,123 +82,61 @@
                 </div>
             </form>
 
-            <!-- Belum Selesai Dibaca -->
-            <div
-                class="d-flex justify-content-center flex-column m-auto"
-                style="width: 500px; height: 400px"
-            >
-                <div class="border border-primary p-3">
-                    <h4 class="d-flex justify-content-center">
-                        Belum Selesai Dibaca
-                    </h4>
-                    <div class="mb-3">
-                        <label for="judulBuku" class="form-label">Judul</label>
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="judulBuku"
-                            aria-describedby="judulHelp"
-                        />
+            <div class="d-flex">
+                <!-- Belum Selesai Dibaca -->
+                <div class="d-flex justify-content-center flex-column m-auto">
+                    <div class="border border-primary p-3">
+                        <h4 class="d-flex justify-content-center">
+                            Belum Selesai Dibaca
+                        </h4>
+                        <div class="card" style="width: 465px">
+                            <div class="card-body">
+                                <h5 class="card-title">Judul Buku</h5>
+                                <div class="d-flex" style="height: 25px">
+                                    <p class="pe-2">Penulis:</p>
+                                    <p>Ini Nama Penulis</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="pe-2">Tahun:</p>
+                                    <p>Ini Tahun Buku</p>
+                                </div>
+                                <button type="button" class="btn btn-success">
+                                    Sudah Selesai Dibaca
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    Hapus Buku
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="penulisBuku" class="form-label"
-                            >Penulis</label
-                        >
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="penulisBuku"
-                            aria-describedby="penulisHelp"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="tahunBuku" class="form-label">Tahun</label>
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="tahunBuku"
-                            aria-describedby="tahunbHelp"
-                        />
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input
-                            type="checkbox"
-                            class="form-check-input"
-                            id="selesaiDibaca"
-                        />
-                        <label class="form-check-label" for="selesaiDibaca"
-                            >Selesai dibaca</label
-                        >
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        style="width: 465px"
-                    >
-                        Masukkan Buku ke Rak
-                        <span class="fw-bold">Belum Selesai Dibaca</span>
-                    </button>
                 </div>
-            </div>
 
-            <!-- Sudah Selesai Dibaca -->
-            <div
-                class="d-flex justify-content-center flex-column m-auto"
-                style="width: 500px; height: 450px"
-            >
-                <div class="border border-primary p-3">
-                    <h4 class="d-flex justify-content-center">
-                        Sudah Selesai Dibaca
-                    </h4>
-                    <div class="mb-3">
-                        <label for="judulBuku" class="form-label">Judul</label>
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="judulBuku"
-                            aria-describedby="judulHelp"
-                        />
+                <!-- Sudah Selesai Dibaca -->
+                <div class="d-flex justify-content-center flex-column m-auto">
+                    <div class="border border-primary p-3">
+                        <h4 class="d-flex justify-content-center">
+                            Sudah Selesai Dibaca
+                        </h4>
+                        <div class="card" style="width: 465px">
+                            <div class="card-body">
+                                <h5 class="card-title">Judul Buku</h5>
+                                <div class="d-flex" style="height: 25px">
+                                    <p class="pe-2">Penulis:</p>
+                                    <p>Ini Nama Penulis</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="pe-2">Tahun:</p>
+                                    <p>Ini Tahun Buku</p>
+                                </div>
+                                <button type="button" class="btn btn-success">
+                                    Belum Selesai Dibaca
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    Hapus Buku
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="penulisBuku" class="form-label"
-                            >Penulis</label
-                        >
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="penulisBuku"
-                            aria-describedby="penulisHelp"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="tahunBuku" class="form-label">Tahun</label>
-                        <input
-                            type="judul"
-                            class="form-control"
-                            id="tahunBuku"
-                            aria-describedby="tahunbHelp"
-                        />
-                    </div>
-
-                    <div class="mb-3 form-check">
-                        <input
-                            type="checkbox"
-                            class="form-check-input"
-                            id="selesaiDibaca"
-                        />
-                        <label class="form-check-label" for="selesaiDibaca"
-                            >Selesai dibaca</label
-                        >
-                    </div>
-                    <button
-                        type="submit"
-                        class="btn btn-primary"
-                        style="width: 465px"
-                    >
-                        Masukkan Buku ke Rak
-                        <span class="fw-bold">Belum Selesai Dibaca</span>
-                    </button>
                 </div>
             </div>
         </main>
