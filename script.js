@@ -1,7 +1,7 @@
 const books = [];
 const RENDER_EVENT = "render-book";
 const SAVED_EVENT = "saved-book";
-const STORAGE_KEY = "BOOKSHELF-APPS";
+const STORAGE_KEY = "BOOK-APP";
 
 document.addEventListener("DOMContentLoaded", function () {
     const submitForm = document.getElementById("form");
@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-    const unclompetedBOOKList = document.getElementById("books");
-    unclompetedBOOKList.innerHTML = "";
+    // console.log(books);
+    const uncompletedBOOKList = document.getElementById("books");
+    uncompletedBOOKList.innerHTML = "";
 
     const completedBOOKList = document.getElementById("completed-books");
     completedBOOKList.innerHTML = "";
@@ -25,80 +26,86 @@ document.addEventListener(RENDER_EVENT, function () {
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
         if (!bookItem.isCompleted) {
-            unclompetedBOOKList.append(bookElement);
+            uncompletedBOOKList.append(bookElement);
         } else {
             completedBOOKList.append(bookElement);
         }
     }
-    console.log("buku" + books);
 });
 
 function addBook() {
-    const judulBuku = document.getElementById("judulBuku").value;
-    const penulisBuku = document.getElementById("penulisBuku").value;
-    const tahunBuku = document.getElementById("tahunBuku").value;
-    const generateID = generateID();
+    const bookTitle = document.getElementById("title").value;
+    const bookAuthor = document.getElementById("penulis").value;
+    const bookYear = document.getElementById("tahun").value;
 
+    const generatedId = generateId();
     const bookObject = generateBookObject(
-        generateID,
-        judulBuku,
-        penulisBuku,
-        tahunBuku,
+        generatedId,
+        bookTitle,
+        bookAuthor,
+        bookYear,
         false
     );
     books.push(bookObject);
-    // console.log("tets" + bookObject);
+
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
 
-function generateID() {
+function generateId() {
     return +new Date();
 }
 
-function generateBookObject(id, judul, penulis, tahun, isCompleted) {
+function generateBookObject(id, title, author, year, isCompleted) {
     return {
         id,
-        judul,
-        penulis,
-        tahun,
+        title,
+        author,
+        year,
         isCompleted,
     };
 }
 
 function makeBook(bookObject) {
-    const bookTitle = document.createElement("h5");
-    bookTitle.innerText = bookObject.judul;
+    const textTitle = document.createElement("h5");
+    textTitle.classList.add("card-title");
+    textTitle.innerText = bookObject.title;
 
-    const bookAuthor = document.createElement("p");
-    bookAuthor.classList.add("pe-2");
+    const textAuthorName = document.createElement("p");
+    textAuthorName.innerText = bookObject.author;
 
-    const bookAuthorName = document.createElement("p");
-    bookAuthorName.innerText = bookObject.penulis;
+    const textAuthor = document.createElement("p");
+    textAuthor.classList.add("pe-2");
+    textAuthor.innerText = "Penulis:";
 
-    const bookYear = document.createElement("p");
-    bookYear.classList.add("pe-2");
+    const authorContainer = document.createElement("div");
+    authorContainer.classList.add("d-flex");
+    authorContainer.style.height = "25px";
+    authorContainer.append(textAuthor, textAuthorName);
 
-    const bookYearDate = document.createElement("p");
-    bookYearDate.innerText = bookObject.tahun;
+    const textYearDate = document.createElement("p");
+    textYearDate.innerText = bookObject.year;
 
-    const bookAuthorContainer = document.createElement("div");
-    bookAuthorContainer.classList.add("d-flex");
-    bookAuthorContainer.style.add("height: 25px");
-    bookAuthor.append(bookAuthor, bookAuthorName);
+    const textYear = document.createElement("p");
+    textYear.classList.add("pe-2");
+    textYear.innerText = "Tahun:";
 
-    const bookYearContainer = document.createElement("div");
-    bookYearContainer.classList.add("d-flex");
-    bookYearContainer.append(bookYear, bookYearDate);
+    const yearContainer = document.createElement("div");
+    yearContainer.classList.add("d-flex");
+    yearContainer.append(textYear, textYearDate);
+
+    const textContainer = document.createElement("div");
+    textContainer.classList.add("card-body");
+    textContainer.append(textTitle, authorContainer, yearContainer);
 
     const container = document.createElement("div");
-    container.classList.add("card-body");
-    container.append(bookTitle, bookAuthorContainer, bookYearContainer);
+    container.append(textContainer);
+    container.classList.add("card");
     container.setAttribute("id", `book-${bookObject.id}`);
 
     if (bookObject.isCompleted) {
         const undoButton = document.createElement("button");
-        undoButton.classList.add("btn btn-success");
+        undoButton.classList.add("btn", "btn-success");
         undoButton.innerText = "Belum Selesai Dibaca";
 
         undoButton.addEventListener("click", function () {
@@ -106,7 +113,7 @@ function makeBook(bookObject) {
         });
 
         const trashButton = document.createElement("button");
-        trashButton.classList.add("btn btn-danger");
+        trashButton.classList.add("btn", "btn-danger");
         trashButton.innerText = "Hapus Buku";
 
         trashButton.addEventListener("click", function () {
@@ -116,15 +123,15 @@ function makeBook(bookObject) {
         container.append(undoButton, trashButton);
     } else {
         const checkButton = document.createElement("button");
-        checkButton.classList.add("btn btn-succes");
-        checkButton.innerText = "Belum Selesai Dibaca";
+        checkButton.classList.add("btn", "btn-success");
+        checkButton.innerText = "Sudah Selesai Dibaca";
 
         checkButton.addEventListener("click", function () {
             addBookToCompleted(bookObject.id);
         });
 
         const trashButton = document.createElement("button");
-        trashButton.classList.add("btn btn-danger");
+        trashButton.classList.add("btn", "btn-danger");
         trashButton.innerText = "Hapus Buku";
 
         trashButton.addEventListener("click", function () {
@@ -137,7 +144,7 @@ function makeBook(bookObject) {
     return container;
 }
 
-function addBookToCompleted() {
+function addBookToCompleted(bookId) {
     const bookTarget = findBook(bookId);
 
     if (bookTarget == null) return;
@@ -182,6 +189,7 @@ function findBookIndex(bookId) {
             return index;
         }
     }
+
     return -1;
 }
 
@@ -214,9 +222,9 @@ function loadDataFromStorage() {
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
-document.addEventListener(SAVED_EVENT, function () {
+document.addEventListener(SAVED_EVENT, () => {
     console.log(localStorage.getItem(STORAGE_KEY));
-    // // Get the snackbar DIV
+    // Get the snackbar DIV
     // var x = document.getElementById("snackbar");
 
     // // Add the "show" class to DIV
