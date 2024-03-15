@@ -25,7 +25,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
-        if (!bookItem.isCompleted) {
+        if (!bookItem.isComplete) {
             uncompletedBOOKList.append(bookElement);
         } else {
             completedBOOKList.append(bookElement);
@@ -56,13 +56,13 @@ function generateId() {
     return +new Date();
 }
 
-function generateBookObject(id, title, author, year, isCompleted) {
+function generateBookObject(id, title, author, year, isComplete) {
     return {
         id,
         title,
         author,
         year,
-        isCompleted,
+        isComplete,
     };
 }
 
@@ -103,7 +103,7 @@ function makeBook(bookObject) {
     container.classList.add("card");
     container.setAttribute("id", `book-${bookObject.id}`);
 
-    if (bookObject.isCompleted) {
+    if (bookObject.isComplete) {
         const undoButton = document.createElement("button");
         undoButton.classList.add("btn", "btn-success");
         undoButton.innerText = "Belum Selesai Dibaca";
@@ -120,7 +120,7 @@ function makeBook(bookObject) {
             removeBookFromCompleted(bookObject.id);
         });
 
-        container.append(undoButton, trashButton);
+        textContainer.append(undoButton, trashButton);
     } else {
         const checkButton = document.createElement("button");
         checkButton.classList.add("btn", "btn-success");
@@ -138,7 +138,7 @@ function makeBook(bookObject) {
             removeBookFromCompleted(bookObject.id);
         });
 
-        container.append(checkButton, trashButton);
+        textContainer.append(checkButton, trashButton);
     }
 
     return container;
@@ -149,7 +149,7 @@ function addBookToCompleted(bookId) {
 
     if (bookTarget == null) return;
 
-    bookTarget.isCompleted = true;
+    bookTarget.isComplete = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -178,7 +178,7 @@ function undoBookFromCompleted(bookId) {
 
     if (bookTarget == null) return;
 
-    bookTarget.isCompleted = false;
+    bookTarget.isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -221,6 +221,28 @@ function loadDataFromStorage() {
 
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
+
+function searching() {
+    let keyword = document.getElementById("keyword").value;
+    let filter = keyword.toLowerCase();
+
+    let cards = document.getElementsByClassName("card-body");
+
+    for (var i = 0; i < cards.length; i++) {
+        var cardTitle = cards[i].getElementsByClassName("card-title")[0];
+        var title = cardTitle.innerText.toLowerCase();
+        if (title.indexOf(filter) > -1) {
+            cards[i].style.display = "";
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+}
+
+document.getElementById("searchForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    searching();
+});
 
 document.addEventListener(SAVED_EVENT, () => {
     console.log(localStorage.getItem(STORAGE_KEY));
