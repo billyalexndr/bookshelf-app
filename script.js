@@ -1,6 +1,7 @@
 const books = [];
 const RENDER_EVENT = "render-book";
 const SAVED_EVENT = "saved-book";
+const REMOVED_EVENT = "removed-book";
 const STORAGE_KEY = "BOOK-APP";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -16,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-    // console.log(books);
     const uncompletedBOOKList = document.getElementById("books");
     uncompletedBOOKList.innerHTML = "";
 
@@ -170,7 +170,7 @@ function removeBookFromCompleted(bookId) {
 
     books.splice(bookTarget, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
+    removeData();
 }
 
 function undoBookFromCompleted(bookId) {
@@ -198,6 +198,14 @@ function saveData() {
         const parsed = JSON.stringify(books);
         localStorage.setItem(STORAGE_KEY, parsed);
         document.dispatchEvent(new Event(SAVED_EVENT));
+    }
+}
+
+function removeData() {
+    if (isStorageExist()) {
+        const parsed = JSON.stringify(books);
+        localStorage.setItem(STORAGE_KEY, parsed);
+        document.dispatchEvent(new Event(REMOVED_EVENT));
     }
 }
 
@@ -246,15 +254,15 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
 
 document.addEventListener(SAVED_EVENT, () => {
     console.log(localStorage.getItem(STORAGE_KEY));
-    // Get the snackbar DIV
-    // var x = document.getElementById("snackbar");
+});
 
-    // // Add the "show" class to DIV
-    // x.className = "show";
-    // x.innerText = "Haii ini adalah Toast Message...";
+document.addEventListener(REMOVED_EVENT, () => {
+    var x = document.getElementById("snackbar");
 
-    // // After 3 seconds, remove the show class from DIV
-    // setTimeout(function () {
-    //     x.className = x.className.replace("show", "");
-    // }, 3000);
+    x.className = "show";
+    x.innerText = "Anda telah menghapus Buku...";
+
+    setTimeout(function () {
+        x.className = x.className.replace("show", "");
+    }, 3000);
 });
