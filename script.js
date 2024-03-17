@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     submitForm.addEventListener("submit", function (e) {
         e.preventDefault();
         addBook();
+        submitForm.reset();
     });
 
     if (isStorageExist()) {
@@ -36,7 +37,8 @@ document.addEventListener(RENDER_EVENT, function () {
 function addBook() {
     const bookTitle = document.getElementById("title").value;
     const bookAuthor = document.getElementById("penulis").value;
-    const bookYear = document.getElementById("tahun").value;
+    const year = document.getElementById("tahun").value;
+    const bookYear = parseInt(year);
 
     const generatedId = generateId();
     const bookObject = generateBookObject(
@@ -105,7 +107,7 @@ function makeBook(bookObject) {
 
     if (bookObject.isComplete) {
         const undoButton = document.createElement("button");
-        undoButton.classList.add("btn", "btn-success");
+        undoButton.classList.add("btn", "btn-success", "me-2");
         undoButton.innerText = "Belum Selesai Dibaca";
 
         undoButton.addEventListener("click", function () {
@@ -123,7 +125,7 @@ function makeBook(bookObject) {
         textContainer.append(undoButton, trashButton);
     } else {
         const checkButton = document.createElement("button");
-        checkButton.classList.add("btn", "btn-success");
+        checkButton.classList.add("btn", "btn-success", "me-2");
         checkButton.innerText = "Sudah Selesai Dibaca";
 
         checkButton.addEventListener("click", function () {
