@@ -102,7 +102,7 @@ function makeBook(bookObject) {
 
     const container = document.createElement("div");
     container.append(textContainer);
-    container.classList.add("card");
+    container.classList.add("card", "mb-2");
     container.setAttribute("id", `book-${bookObject.id}`);
 
     if (bookObject.isComplete) {
